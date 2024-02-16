@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
             errorBorder:
                 OutlineInputBorder(borderSide: BorderSide(color: Colors.red))),
       ),
-      initialRoute: RoutePaths.stats,
+      initialRoute: RoutePaths.home,
       onGenerateRoute: router.Router.generateRoute,
     );
   }
