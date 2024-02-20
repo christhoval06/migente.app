@@ -7,7 +7,7 @@ class OptionRepo {
     final List<Option> options = [
       Option(
           id: "new-people",
-          name: "Agregar persona",
+          name: "Registro",
           icon: Icons.add,
           path: RoutePaths.addPerson),
       Option(
@@ -17,8 +17,8 @@ class OptionRepo {
           path: RoutePaths.list),
       Option(
           id: "admin-stats",
-          name: "Administración",
-          icon: Icons.settings,
+          name: "Cifras",
+          icon: Icons.query_stats,
           path: RoutePaths.code),
     ];
 

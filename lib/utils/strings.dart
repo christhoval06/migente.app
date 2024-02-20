@@ -18,11 +18,11 @@ extension Initials on String {
     return split('|');
   }
 
-  String humanIt() {
+  String humanIt({int? decimals = 2}) {
     double n = double.parse(this);
 
     if (n < 1000) {
-      return n.toStringAsFixed(2);
+      return n.toStringAsFixed(decimals!);
     }
 
     if (n < 10000) {

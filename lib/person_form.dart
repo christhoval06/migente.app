@@ -64,7 +64,7 @@ class PersonForm extends StatelessWidget {
         _formKey.currentState?.patchValue(saved.toMap());
       }
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text('Datos actualizados correctamente.'),
+        content: Text('Datos guardados correctamente.'),
       ));
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
@@ -88,7 +88,7 @@ class PersonForm extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Theme.of(context).colorScheme.secondary,
-          title: const Text("Form"),
+          title: Text(isNew ? 'Registro' : 'Actualización'),
           centerTitle: true,
           actions: [
             IconButton(

@@ -48,7 +48,7 @@ class CodePage extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Theme.of(context).colorScheme.primary,
-          title: const Text("Mi Gente"),
+          title: const Text("Verificación"),
         ),
         body: SafeArea(
           child: Center(

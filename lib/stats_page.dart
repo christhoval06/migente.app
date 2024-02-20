@@ -1,10 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:mi_gente/config/app_constants.dart';
+import 'package:mi_gente/domain/people_controller.dart';
+import 'package:mi_gente/models/person_votes.dart';
+import 'package:mi_gente/ui/locator.dart';
+import 'package:mi_gente/ui/widgets/future_stat_view.dart';
+import 'package:mi_gente/ui/widgets/stats_count.dart';
 import 'package:mi_gente/utils/strings.dart';
 
 // https://unicode.org/Public/emoji/1.0/emoji-data.txt
 
 class StatsPage extends StatelessWidget {
   const StatsPage({super.key});
+
+  Future<PersonVotes> getPeopleVotes() {
+    return locator.get<PeopleDomainController>().getPeopleVotes();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -14,110 +24,68 @@ class StatsPage extends StatelessWidget {
           title: const Text("Cifras"),
         ),
         body: Padding(
-          padding: EdgeInsets.all(16),
+          padding: const EdgeInsets.all(16),
           child: Column(
             children: [
               Row(
                 children: [
-                  Stack(alignment: Alignment.center, children: [
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.45,
-                      height: 200,
-                      child: Card(
-                        elevation: 4,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8)),
-                        color: Colors.white,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text('New Wins',
-                                  textAlign: TextAlign.left,
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w600)),
-                              Expanded(
-                                  flex: 2,
-                                  child: Center(
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          '23043'.humanIt(),
-                                          style: const TextStyle(
-                                              fontSize: 42,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        const Text(
-                                          '\u{2B06}25%',
-                                          style: TextStyle(
-                                              color: Colors.green,
-                                              fontSize: 16),
-                                        ),
-                                        const Text('vs previous 30 days',
-                                            style: TextStyle(
-                                                fontSize: 10,
-                                                color: Colors.black38)),
-                                      ],
-                                    ),
-                                  ))
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                        top: 0.5,
-                        right: 0.5,
-                        child: IconButton(
-                          icon: const Icon(Icons.refresh),
-                          onPressed: () {},
-                        ))
-                  ]),
-                  const Spacer(),
-                  Stack(alignment: Alignment.center, children: [
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.45,
-                      height: 200,
-                      child: Card(
-                          elevation: 4,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8)),
-                          color: Colors.white,
-                          child: const Center(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text(
-                                  '\u{1F446}25%',
-                                  style: TextStyle(
-                                      color: Colors.green,
-                                      fontSize: 42,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                Text('Google Rankings',
-                                    style: TextStyle(
-                                        fontSize: 14, color: Colors.black87)),
-                              ],
+                  FutureStatView(
+                      title: 'Mi Gente',
+                      future: getPeopleVotes(),
+                      render: (PersonVotes? votes) {
+                        final total = (votes?.si ?? 0) + (votes?.no ?? 0);
+                        final double percentYes =
+                            ((votes?.si ?? 0) / total) * 100;
+
+                        return Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              '$total'.humanIt(decimals: 0),
+                              style: const TextStyle(
+                                  fontSize: 42, fontWeight: FontWeight.bold),
                             ),
-                          )),
-                    ),
-                    Positioned(
-                        top: 0.5,
-                        right: 0.5,
-                        child: IconButton(
-                          icon: const Icon(Icons.refresh),
-                          onPressed: () {},
-                        ))
-                  ])
+                            Text(
+                              '${percentYes.toStringAsFixed(2)}%',
+                              style: const TextStyle(
+                                  color: Colors.green, fontSize: 16),
+                            ),
+                            const Text('ha votado',
+                                style: TextStyle(
+                                    fontSize: 10, color: Colors.black38)),
+                          ],
+                        );
+                      }),
+                  const Spacer(),
+                  FutureStatView(
+                      future: getPeopleVotes(),
+                      icon: Icons.navigate_next,
+                      onPress: (BuildContext context) {
+                        Navigator.pushNamed(context, RoutePaths.list,
+                            arguments: {'votes': 'no'});
+                      },
+                      render: (PersonVotes? votes) {
+                        return Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              '${votes?.no ?? 0}',
+                              style: const TextStyle(
+                                  color: Colors.red,
+                                  fontSize: 42,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            const Text('No han votado!',
+                                style: TextStyle(
+                                    fontSize: 14, color: Colors.black87)),
+                          ],
+                        );
+                      }),
                 ],
               ),
+              const SizedBox(height: 16),
               Stack(alignment: Alignment.center, children: [
                 SizedBox(
                   width: double.infinity,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:mi_gente/config/app_constants.dart';
 import 'package:mi_gente/domain/people_controller.dart';
+import 'package:mi_gente/models/pagination.dart';
 import 'package:mi_gente/models/people.dart';
 import 'package:mi_gente/models/person.dart';
 import 'package:mi_gente/ui/locator.dart';
@@ -11,7 +12,9 @@ import 'package:mi_gente/utils/strings.dart';
 var logger = Logger();
 
 class PeoplePage extends StatefulWidget {
-  const PeoplePage({super.key});
+  final String? votes;
+  final bool showAll;
+  const PeoplePage({super.key, this.votes = 'all', this.showAll = false});
 
   @override
   State<PeoplePage> createState() => _PeoplePageState();
@@ -31,7 +34,14 @@ class _PeoplePageState extends State<PeoplePage> {
   }
 
   Future<People> getPeole() {
-    return locator.get<PeopleDomainController>().getPeople(ndi: query);
+    if (query == null && widget.votes == null) {
+      return Future<People>.value(People(
+          pagination: Pagination(count: 0, page: 0, pages: 0, perPage: 0),
+          persons: []));
+    }
+    return locator
+        .get<PeopleDomainController>()
+        .getPeople(ndi: query, votes: widget.votes);
   }
 
   Future<void> onOpenQRCodeScan(BuildContext context) async {
@@ -92,7 +102,7 @@ class _PeoplePageState extends State<PeoplePage> {
         snap: false,
         centerTitle: false,
         backgroundColor: Theme.of(context).colorScheme.secondary,
-        title: const Text('Mi Gente'),
+        title: const Text('Búsqueda'),
         actions: [
           IconButton(
             icon: const Icon(Icons.qr_code_2),

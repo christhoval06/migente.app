@@ -14,7 +14,17 @@ class Router {
       case RoutePaths.home:
         return MaterialPageRoute(builder: (_) => MainPage());
       case RoutePaths.list:
-        return MaterialPageRoute(builder: (_) => const PeoplePage());
+        String? votes;
+
+        if (settings.arguments != null) {
+          Map<String, dynamic> arguments =
+              settings.arguments as Map<String, dynamic>;
+
+          if (arguments.containsKey('votes')) {
+            votes = arguments['votes'] as String?;
+          }
+        }
+        return MaterialPageRoute(builder: (_) => PeoplePage(votes: votes));
       case RoutePaths.addPerson:
         return MaterialPageRoute(builder: (_) => PersonForm(isNew: true));
       case RoutePaths.updatePerson:
