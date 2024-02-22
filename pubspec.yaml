@@ -46,6 +46,8 @@ dependencies:
   flutter_otp_text_field: ^1.1.1
   permission_handler: ^11.3.0
   qr_code_scanner: ^1.0.0
+  fl_chart: ^0.66.2
+  collection: ^1.18.0
 
 dev_dependencies:
   flutter_test:
@@ -112,6 +114,12 @@ flutter_launcher_name:
 flutter_native_splash:
   color: "#3F51B5"
   image: "assets/icon.png"
+  android_12:
+    image: "assets/icon.png"
+    icon_background_color: "#3F51B5"
+    image_dark: "assets/icon.png"
+    icon_background_color_dark: "#3F51B5"
+    
 
 flutter_launcher_icons:
   android: true

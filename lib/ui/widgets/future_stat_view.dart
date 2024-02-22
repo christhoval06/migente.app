@@ -3,7 +3,7 @@ import 'package:mi_gente/ui/widgets/render_if_view.dart';
 
 class FutureStatView<T> extends StatelessWidget {
   final String? title;
-  final Function(T?) render;
+  final Function(T) render;
   final Future<T> future;
   final Function(BuildContext)? onPress;
   final IconData icon;
@@ -42,7 +42,7 @@ class FutureStatView<T> extends StatelessWidget {
               children: [
                 RenderIfView(
                     condition: title != null,
-                    child: Text(title ?? '',
+                    render: () => Text(title!,
                         textAlign: TextAlign.left,
                         style: const TextStyle(
                             fontSize: 16, fontWeight: FontWeight.w600))),
@@ -66,10 +66,42 @@ class FutureStatView<T> extends StatelessWidget {
                                     debugPrintStack(
                                         stackTrace: snapshot.stackTrace,
                                         label: 'app.mi.gente');
-                                    return const Center(child: Text('Error'));
+                                    return const Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Icon(
+                                            Icons.close,
+                                            color: Colors.black38,
+                                            size: 32,
+                                          ),
+                                          Text("Error",
+                                              textAlign: TextAlign.left,
+                                              style: TextStyle(
+                                                  color: Colors.black38,
+                                                  fontSize: 12))
+                                        ]);
                                   }
 
-                                  return render(snapshot.data);
+                                  if (snapshot.data == null) {
+                                    return const Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Icon(
+                                            Icons.not_interested,
+                                            color: Colors.black38,
+                                            size: 32,
+                                          ),
+                                          Text("No hay datos",
+                                              textAlign: TextAlign.left,
+                                              style: TextStyle(
+                                                  color: Colors.black38,
+                                                  fontSize: 12))
+                                        ]);
+                                  }
+
+                                  return render(snapshot.data!);
                                 default:
                                   return Container();
                               }
@@ -81,7 +113,7 @@ class FutureStatView<T> extends StatelessWidget {
       ),
       RenderIfView(
           condition: onPress != null,
-          child: Positioned(
+          render: () => Positioned(
               top: 0.5,
               right: 0.5,
               child: IconButton(

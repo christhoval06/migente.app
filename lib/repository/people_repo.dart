@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:logger/logger.dart';
 import 'package:http/http.dart' as http;
 import 'package:mi_gente/config/strings.dart';
 import 'package:mi_gente/models/people.dart';
@@ -7,8 +6,7 @@ import 'package:mi_gente/models/person.dart';
 import 'package:mi_gente/models/person_votes.dart';
 import 'package:mi_gente/models/votes_per_group.dart';
 import 'package:mi_gente/models/votes_per_province.dart';
-
-var logger = Logger();
+import 'package:mi_gente/utils/logger.dart';
 
 class PeopleRepo {
   Future<People> getPeople({String? ndi, String? votes = 'all'}) async {

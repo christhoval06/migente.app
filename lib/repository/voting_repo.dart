@@ -1,11 +1,9 @@
-import 'package:logger/logger.dart';
 import 'package:http/http.dart' as http;
 import 'package:mi_gente/config/strings.dart';
 import 'package:mi_gente/models/votes_per_places.dart';
 import 'package:mi_gente/models/voting_places.dart';
 import 'package:mi_gente/models/voting_places_stats.dart';
-
-var logger = Logger();
+import 'package:mi_gente/utils/logger.dart';
 
 class VotingRepo {
   Future<List<String>> getVotingPlace() async {

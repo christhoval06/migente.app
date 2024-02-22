@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:mi_gente/code_page.dart';
 import 'package:mi_gente/config/app_constants.dart';
-import 'package:mi_gente/home_page.dart';
 import 'package:mi_gente/models/person.dart';
-import 'package:mi_gente/people_page.dart';
-import 'package:mi_gente/person_form.dart';
-import 'package:mi_gente/qr_scanner.dart';
-import 'package:mi_gente/stats_page.dart';
+
+import 'pages/pages.dart';
 
 class Router {
   static Route<dynamic> generateRoute(RouteSettings settings) {

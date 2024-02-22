@@ -2,13 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:intl/intl.dart';
-import 'package:logger/logger.dart';
 import 'package:mi_gente/config/app_constants.dart';
 import 'package:mi_gente/domain/people_controller.dart';
 import 'package:mi_gente/models/person.dart';
 import 'package:mi_gente/ui/locator.dart';
-
-var logger = Logger();
+import 'package:mi_gente/utils/logger.dart';
 
 class PersonForm extends StatelessWidget {
   final bool isNew;

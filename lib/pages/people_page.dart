@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:logger/logger.dart';
 import 'package:mi_gente/config/app_constants.dart';
 import 'package:mi_gente/domain/people_controller.dart';
 import 'package:mi_gente/models/pagination.dart';
@@ -8,8 +7,6 @@ import 'package:mi_gente/models/person.dart';
 import 'package:mi_gente/ui/locator.dart';
 import 'package:mi_gente/ui/views/base_future_widget.dart';
 import 'package:mi_gente/utils/strings.dart';
-
-var logger = Logger();
 
 class PeoplePage extends StatefulWidget {
   final String? votes;

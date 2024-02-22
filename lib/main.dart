@@ -8,6 +8,8 @@ void main() {
   runApp(const MyApp());
 }
 
+// https://github.com/guilherme-v/flutter-clean-architecture-example
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -38,7 +40,7 @@ class MyApp extends StatelessWidget {
             errorBorder:
                 OutlineInputBorder(borderSide: BorderSide(color: Colors.red))),
       ),
-      initialRoute: RoutePaths.stats,
+      initialRoute: RoutePaths.home,
       onGenerateRoute: router.Router.generateRoute,
     );
   }
